@@ -116,13 +116,17 @@ require_once("../../../model/class/planes.class.php");
         <?php
           if($cliente["cli_cortesia"] == 1){
             echo '<button class="btn btn-warning" name="btn_continue" value="crearCortesia">Usar Cortesia</button>';
+          }else{
+            echo '<button class="btn btn-warning" name="btn_continue" value="Reprogramar">Reprogramar Cita</button>';
           }
         ?>
+
+
           <button type="button" data-dismiss="modal" class="btn btn-inverse">Cancelar</button>
       </div>
 </div>
 </form>
 
 <?php
-  } 
+  }
 ?>

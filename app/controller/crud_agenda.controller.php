@@ -8,6 +8,37 @@
   $accion = $_REQUEST["btn_continue"];
 
   switch($accion){
+
+    case "Reprogramar":
+
+    $cli_codigo         = $_POST["txt_cli_codigo"];
+    $sed_codigo         = $_POST["txt_sed_codigo"];
+    $age_sala           = $_POST["txt_age_sala"];
+    $age_fecha          = $_POST["txt_fech_fin"];
+    $age_hora           = $_POST["txt_hora"];
+
+        try{
+          Gestion_Agenda::Reprogramar($cli_codigo,$sed_codigo,$age_sala,$age_fecha,$age_hora);
+
+          $alert = "false";
+          $alert_type = base64_encode("success");
+          $alert_msn  = base64_encode("Perfecto! la cita ha sido reprogramada correctamente. ");
+
+        }catch(Exception $e){
+
+               require_once("exceptions.controller.php");
+
+
+$alert = "true";
+                              $alert_type = base64_encode("error");
+                              $alert_msn  = base64_encode($e->getMessage());
+               //Almacenamos el error en el log del sistema
+
+               error($e->getMessage(),$e->getFile(),$e->getLine());
+        }
+
+    break;
+
     case "crearCortesia":
 
      $cli_codigo         = $_POST["txt_cli_codigo"];

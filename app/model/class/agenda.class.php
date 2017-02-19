@@ -251,6 +251,25 @@ class Gestion_Agenda{
       MIDAS_DataBase::Disconnect();
     }
 
+    function Reprogramar($cli_codigo,$sed_codigo,$age_sala,$age_fecha,$age_hora){
+
+      $pdo = MIDAS_DataBase::Connect();
+      $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+      $sql = 'SELECT * FROM ges_agenda WHERE cli_codigo = ? AND sed_codigo = ? AND age_estado != "Cortesia" ORDER BY age_fecha ASC LIMIT 1';
+
+      $query = $pdo->prepare($sql);
+      $query->execute(array($cli_codigo, $sed_codigo));
+      $citaReprogramar = $query->fetch(PDO::FETCH_BOTH);
+
+      echo $age_hora;
+      $sql = "UPDATE ges_agenda SET age_fecha = ? , age_hora = ? , age_sala = ? WHERE age_codigo = ?";
+      $query = $pdo->prepare($sql);
+      $query->execute(array($age_fecha,$age_hora, $age_sala, $citaReprogramar[0]));
+
+      MIDAS_DataBase::Disconnect();
+    }
+
     function diaspormes($Month, $Year){
        //Si la extensión que mencioné está instalada, usamos esa.
        if( is_callable("cal_days_in_month")){
