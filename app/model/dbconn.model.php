@@ -18,7 +18,8 @@
 class MIDAS_DataBase{
 
   # Especificamos las credenciales de acceso a nuestra SMBD
- private static $db_host = "localhost";
+  // private static $db_host = "localhost";
+  private static $db_host = "a2plcpnl0603.prod.iad2.secureserver.net";
 
  // Datos bd local
  // private static $db_name = "besmart_midas";
