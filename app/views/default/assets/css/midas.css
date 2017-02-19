@@ -1,0 +1,479 @@
+*{
+  text-transform: uppercase !important;
+}
+
+.configuracion .thum .panel{
+  background-color: #73C50E;
+  transition: 0.2s ease;
+  color: white;
+  height: 200px;
+  padding: 20px 10px;}
+
+.configuracion .thum .glyphicon, .configuracion .thum .fa{
+  font-size: 50px;
+  text-align: center;
+  margin: 10px 0;
+}
+
+.configuracion .thum{
+  text-align: center;
+}
+
+.configuracion .thum .panel:hover{
+  background-color: rgb(148, 214, 10);
+}
+
+.configuracion .thum p{
+  margin-top: 10px;
+  line-height: 1;
+}
+
+.page_module h1{
+  margin-bottom: 20px;
+}
+
+.page_module .btns-crud{
+  text-align: right;
+}
+
+#innertext{
+  text-transform: uppercase;}
+
+.alert{
+  padding: 7px;
+  border-radius:0;
+  animation: fadein 2s;
+    -moz-animation: fadein 2s; /* Firefox */
+    -webkit-animation: fadein 2s; /* Safari and Chrome */
+    -o-animation: fadein 2s; /* Opera */
+}
+
+@keyframes fadein {
+    from {
+        opacity:0;
+    }
+    to {
+        opacity:1;
+    }
+}
+@-moz-keyframes fadein { /* Firefox */
+    from {
+        opacity:0;
+    }
+    to {
+        opacity:1;
+    }
+}
+@-webkit-keyframes fadein { /* Safari and Chrome */
+    from {
+        opacity:0;
+    }
+    to {
+        opacity:1;
+    }
+}
+@-o-keyframes fadein { /* Opera */
+    from {
+        opacity:0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.textpanel{
+   padding: 0 19px;}
+
+.btn-theme-midas, .btn-theme-midas:active, .btn-theme-midas:focus{
+   background-color: #94D60A;
+   color: #ffffff;
+   font-family: "oswaldregular";
+   text-transform: uppercase;
+}
+
+.btn-theme-midas:hover{
+   background-color: #BDBDBD;
+   color: #ffffff;
+}
+
+.forgot-help{
+  color: #FFF;
+  font-family: "Varela";
+  background-color: #BDBDBD;
+  padding: 5px;
+  border-radius: 5px;
+  border:1px solid #AAAAAA;
+}
+
+.forgot-help:hover{
+	color: darkslategrey;}
+
+footer{
+  background-color: #222222;
+  color: whitesmoke;
+  z-index: 1000;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  padding: 5px 0;
+  text-align: right;
+  font-size: 11px}
+
+
+
+ .bfh-countries, .bfh-states{
+   text-transform: uppercase;
+ }
+
+ .grid-item { width: 200px;  }
+ .grid-item--width2 { width: 400px; }
+
+#divMayus{
+  background-color: rgb(255, 197, 66);
+  float: left;
+  color: #fff;
+  font-size: 12px;
+  margin-left: 0px;
+  padding: 3px 5px 0;
+  border-radius: 5px 5px 0 0;
+  margin-top: -100px;
+}
+
+.contenedor{ width: 100%; float: left;}
+#camara, #foto{    width: 100%;
+    min-height: 260px;
+    border-radius: 10px;
+}
+.bg-red{
+  background: #ff0000;
+}
+.bg-reservada{
+  background: #5d5d5d;
+}
+.nomafiliado{
+  background-color: #8FE920;
+color: #fff;
+width: 90%;
+margin: auto;
+top: -19px;
+position: relative;
+padding: 7px;
+text-align: center;
+text-transform: uppercase;
+font-size: 11px;
+border-radius: 5px;
+}
+#botonFoto{
+    background-color: #1A56B1;
+}
+
+#botonIniciar2{
+    background-color: #F35958;
+}
+#botonIniciar2, #botonFoto{
+    position: relative;
+    top: 393px;
+    margin-bottom: -45px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 237px;
+    border: none;
+    z-index: 9999;
+    border-radius: 0 20px 0 0;
+}
+
+.iCheck li{
+  float: left;
+  margin-right: 30px;
+}
+
+.fc-agenda-slots tr{
+  height: 80px;
+}
+
+.line .checked{
+  background-color:#99CC00 !important;
+}
+
+.bg-cortesia{
+  background-color:  #E3E3E3;
+}
+
+.bg-planes{
+    background-color: #C4C4C4 ;
+}
+
+.bg-volver{
+  background-color: #0dc1bb;
+}
+
+.bg-cortesia i, .bg-planes i,  .bg-volver i{
+  font-size: 90px;
+  margin-bottom: 10px;
+}
+
+.bg-cortesia, .bg-planes, .bg-volver{
+  color:#ffffff;
+  height: 200px;
+  text-align: center;
+  padding-top: 30px;
+  cursor: pointer;
+}
+
+.bg-cortesia:hover, .bg-planes:hover, .bg-volver:hover{
+  opacity: 0.7;
+}
+.page_reserva .nav-tabs > .chanve_prev{
+  float: left;
+}
+.page_reserva .nav-tabs > .chanve_next{
+  float:right;
+}
+.page_reserva .nav-tabs > li > a{
+  background-color: #ffffff !important;
+}
+
+.avatar{
+  width:200px;
+}
+
+.datos-empresa h2{
+  font-family:"code_bold" !important;
+  text-transform: uppercase;
+  font-size: 25px;
+  margin-bottom: 20px;
+  float: none;
+}
+
+.datos-empresa .bg-info{
+  background-color: #B8BCBF !important;
+  padding: 15px;
+}
+
+
+.navbar{
+  border-radius: 0;
+  margin-top: 56px;
+  margin-bottom: 0 !important;
+}
+
+.navbar h3{
+  float: left
+}
+.subpage{
+  padding-top: 15px !important;
+}
+
+.navbar-brand{
+  cursor: default;
+}
+
+.navbar-brand:hover, .navbar-brand{
+  color: #94D60A !important;
+}
+
+.panel-heading h2{
+  font-size: 30px;
+  float: left;
+}
+
+.panel-heading .btn{
+  margin-top: 9px;
+  margin-left: 20px;
+}
+
+.panel-heading span{
+  display: block;
+  clear: both;
+}
+
+.panel-heading .icon{
+  float: left;
+  font-size: 29px;
+  margin-top: 4px;
+  margin-right: 13px;
+}
+
+.btn-datagrid{
+  background-color: transparent;
+  border:none;
+  border-radius: 0;
+  margin-bottom: 0;
+}
+
+.btn-detalle, .btn-edit{
+  color: #6b6b6b;
+}
+
+.btn-detalle:hover{
+  color: #94D60A;
+}
+
+.btn-edit:hover{
+  color: #0AC9D6;
+}
+.btn-delete:hover{
+  color: red;
+}
+.btn-delete{
+  color: rgb(231, 38, 38);
+}
+.ui-autocomplete{
+  /*padding: 5px;*/
+}
+.ui-menu-item, .ui-menu-item:hover{
+  border:none;
+
+}
+
+.ui-state-hover,
+.ui-widget-content .ui-state-hover,
+.ui-widget-header .ui-state-hover,
+.ui-state-focus,
+.ui-widget-content .ui-state-focus,
+.ui-widget-header .ui-state-focus{
+    border: none !important;
+  	background: #FFF;
+  	font-weight: normal;
+  	outline:none;
+}
+.ui-state-focus:hover{
+  background-color: #94D60A;
+  color: #fff;
+}
+.ui-state-focus:focus{
+  border:0 !important;
+}
+.ui-widget-content {
+  font-size: 13px;
+}
+
+.ui-menu{
+  padding: 0;
+}
+
+.ui-menu-item{
+  padding: 10px !important;
+}
+#tabla_factura {
+  margin-bottom: 30px;
+}
+#tabla_factura th, #tabla_factura td {
+  padding: 10px;
+  font-weight: normal;
+}
+
+
+.price label{
+  display: block;
+}
+
+.txtprice{
+  text-align: right;
+  float: left;
+}
+
+.txtvalue{
+  text-align: left;
+  float: left;
+  background-color: white;
+}
+.txtprice label{
+  text-align: right;
+  font-size: 13px;
+}
+.txtvalue label{
+  text-align: left;
+  font-size: 13px;
+  color: rgb(43, 43, 43)
+}
+.menu_activo{
+  background-color:#94D60A;
+}
+
+.menu_activo .icon{
+  color: rgba(255, 255, 255, 1);
+}
+
+#canvas_loading span{
+  color: #ffffff !important;
+}
+/*
+input, select, textarea{
+  text-transform: uppercase;
+}*/
+
+#changesede{
+  margin-top: 20px;
+}
+
+#changesede label{
+  font-weight: normal;
+}
+
+#changesede select{
+  background-color: #E5E9EC;
+}
+
+ #home-title{
+   background-color: #1b1e24;
+   font-size: 20px;
+   padding: 10px;
+   color: #fff;
+   margin-bottom: 20px;
+ }
+ #home-title span{
+   color: #8FE920;
+ }
+
+ .progress-label{
+   top:0;
+   font-size: 12px;
+ }
+
+.well {
+  min-height: 155px;}
+
+label{
+  text-transform: uppercase !important;
+}
+
+.page_client .datetimepicker.dropdown-menu{
+  top: 676px !important;
+}
+
+
+.datetimepicker-days table.table-condensed thead  tr:last-child{
+  background-color: #6d6f71 !important;
+  color: white !important;
+}
+
+.datetimepicker table thead tr:first-child, .datetimepicker table tr td.active:active, .datetimepicker table tr td.active:hover:active, .datetimepicker table tr td.active.disabled:active, .datetimepicker table tr td.active.disabled:hover:active, .datetimepicker table tr td.active.active, .datetimepicker table tr td.active:hover.active, .datetimepicker table tr td.active.disabled.active, .datetimepicker table tr td.active.disabled:hover.active{
+    background-color: #94d60a !important;
+}
+
+/* AUTOCOMPLETE */
+  .tt-dropdown-menu {
+    width: 320px;
+    padding: 7px 12px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 0 8px 8px 8px;
+    font-size: 18px;
+    color: #111;
+    background-color: #F6F7F9;
+  }
+
+
+  .twitter-typeahead{
+    display: block !important;
+  }
+
+  .tt-hint{
+    width: 100%;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.428571429;
+  }
