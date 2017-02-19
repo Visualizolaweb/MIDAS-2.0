@@ -86,11 +86,18 @@ $icono = Gestion_Menu::Load_icon($row_paginas[0]);
                         <div id="btn-cancelacita" class="btn btn-inverse btn-block"><i class="fa fa-trash-o"></i> Cancelar cita</div><hr>
                         <h4><strong>TABLA</strong> de colores </h4>
                         <hr>
-                        <span class="external-event label btn-block " style="background-color:#E5E9EC;">Disponible</span>
-                        <span class="external-event label btn-block " style="background-color:#69c9ff;">No Disponible</span>
-                        <span class="external-event label btn-block " style="background-color:#da3f72;">Reserva ultima sem.</span>
+                        <ul class="tooltip-area">
+                        <a href='#' data-toggle='tooltip' title='Disponible' data-container='body'  data-placement='bottom'>
+                          <span class="external-event label btn-block" style="background-color:#E5E9EC; width:20px; height:20px; display:inline-block"></span></a>
+
+                        <a href='#' data-toggle='tooltip' title='No Disponible' data-container='body'  data-placement='bottom'>
+                          <span class="external-event label btn-block" style="background-color:#69c9ff; width:20px; height:20px; display:inline-block"></span></a>
+
+                        <a href='#' data-toggle='tooltip' title='Reserva ultima semana' data-container='body'  data-placement='bottom'>
+                          <span class="external-event label btn-block" style="background-color:#da3f72; width:20px; height:20px; display:inline-block"></span></a>
 
                         <div id="test"></div>
+                      </ul> 
                     </div>
 
                 </div>

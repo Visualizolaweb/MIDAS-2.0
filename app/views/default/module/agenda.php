@@ -77,24 +77,38 @@ $estudios = $sedes["sed_estudios"];
                            $alert_type = base64_decode($_GET["alty"]);
                            $alert_msn  = base64_decode($_GET["almsn"]);
 
-                       
+
                         }
                       }
                     ?>
                     <div>
                         <input type="hidden" id="misede" value="<?php echo $_usu_sed_codigo; ?>">
                         <!-- <div id="btn-crearcita" class="btn btn-inverse btn-block"><i class="fa fa-file-text"></i> Crear cita</div> -->
-                      <!--  <div id="btn-movercita" class="btn btn-inverse btn-block"><i class="fa fa-arrows"></i> Mover cita</div><hr>-->
+                        <div id="btn-movercita" class="btn btn-primary btn-block"><i class="fa fa-calendar"></i> Agenda Usuario</div>
                         <div id="btn-cancelacita" class="btn btn-inverse btn-block"><i class="fa fa-trash-o"></i> Cancelar cita</div><hr>
-                        <h4><strong>TABLA</strong> de colores </h4>
+                        <h4  ><strong>TABLA</strong> de colores </h4>
                         <hr>
-                        <span class="external-event label btn-block" style="background-color:#95D600">Usuario Fijo</span>
-                        <span class="external-event label btn-block" style="background-color:#00BFA8">Usuario Flotante</span>
-                        <span class="external-event label btn-block" style="background-color:#e2f4ba; color:#000 ">Reservada</span>
-                        <span class="external-event label btn-block" style="background-color:#FFD600">Cortesia</span>
-                        <span class="external-event label btn-block" style="background-color:#AC130D">Ultima Cita</span>
-                        <span class="external-event label btn-block" style="background-color:#9E9E9E">VIP</span>
+                        <ul class="tooltip-area">
+                        <a href='#' data-toggle='tooltip' title='Usuario Fijo' data-container='body'  data-placement='bottom'>
+                          <span class="external-event label btn-block" style="background-color:#95D600; width:20px; height:20px; display:inline-block"></span></a>
+
+                        <a href='#' data-toggle='tooltip' title='Usuario Flotante' data-container='body'  data-placement='bottom'>
+                          <span class="external-event label btn-block" style="background-color:#00BFA8; width:20px; height:20px; display:inline-block"></span></a>
+
+                        <a href='#' data-toggle='tooltip' title='Cita Reservada' data-container='body'  data-placement='bottom'>
+                          <span class="external-event label btn-block" style="background-color:#e2f4ba; width:20px; height:20px; display:inline-block"></span></a>
+
+                        <a href='#' data-toggle='tooltip' title='Cita de Cortesia' data-container='body'  data-placement='bottom'>
+                          <span class="external-event label btn-block" style="background-color:#FFD600; width:20px; height:20px; display:inline-block"></span></a>
+
+                        <a href='#' data-toggle='tooltip' title='Ultima Cita' data-container='body'  data-placement='bottom'>
+                          <span class="external-event label btn-block" style="background-color:#AC130D; width:20px; height:20px; display:inline-block"></span></a>
+
+                        <a href='#' data-toggle='tooltip' title='V.I.P' data-container='body'  data-placement='bottom'>
+                          <span class="external-event label btn-block" style="background-color:#9E9E9E; width:20px; height:20px; display:inline-block"></span></a>
+
                         <div id="test"></div>
+                      </ul>
                     </div>
 
                 </div>
