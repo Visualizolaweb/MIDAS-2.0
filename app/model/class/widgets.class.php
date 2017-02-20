@@ -119,7 +119,7 @@ class Gestion_Widgets{
 
       $pdo = MIDAS_DataBase::Connect();
       $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-      $sql = "SELECT sum(pag_valor) as valor, monthname(pag_fechapag) as mes FROM ges_pagos INNER JOIN ges_factura ON ges_facturas_fac_codigo = fac_codigo WHERE ges_sedes_sed_codigo = ? group by month(pag_fechapag)";
+      $sql = "SELECT sum(pag_valor) as valor, monthname(pag_fechapag) as mes FROM ges_pagos INNER JOIN ges_factura ON ges_facturas_fac_codigo = fac_codigo WHERE ges_sedes_sed_codigo = ? AND YEAR(pag_fechapag) = YEAR(CURDATE()) group by month(pag_fechapag)";
       $query = $pdo->prepare($sql);
       $query->execute(array($sede));
 
@@ -161,6 +161,27 @@ class Gestion_Widgets{
       return $result;
       MIDAS_DataBase::Disconnect();
       }
+
+
+      function ultimasCitas($sede){
+
+        $pdo = MIDAS_DataBase::Connect();
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        $sql = "SELECT * FROM ges_clientes INNER JOIN ges_agenda ON  ges_clientes.cli_codigo = ges_agenda.cli_codigo
+                WHERE YEARWEEK(age_fecha) = YEARWEEK(CURDATE()) AND age_estado = 'Reservada' AND ges_sedes_sed_codigo = ? ORDER BY age_fecha ASC ";
+
+        $query = $pdo->prepare($sql);
+        $query->execute(array($sede));
+
+        $result = $query->fetchALL(PDO::FETCH_BOTH);
+
+        MIDAS_DataBase::Disconnect();
+
+        return $result;
+      }
+
+
   // function DineroCaja($sede){
   //   $pdo = MIDAS_DataBase::Connect();
   //   $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

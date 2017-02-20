@@ -175,7 +175,7 @@ function ReadAll(){
     $pdo = MIDAS_DataBase::Connect();
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $sql = "SELECT * FROM  ges_agenda  WHERE cli_codigo = ? AND age_estado =  'Reservada' GROUP BY age_estado ";
+    $sql = "SELECT * FROM  ges_agenda  WHERE cli_codigo = ? AND age_estado =  'Reservada'  ORDER BY age_fecha  DESC LIMIT 1 ";
 
     $query = $pdo->prepare($sql);
     $query->execute(array($codigo_cliente));
@@ -187,6 +187,7 @@ function ReadAll(){
     return $result;
   }
 
+  
   /**********************************************
    * Update()                                   *
    * Metodo  de Actualización de registro       *
