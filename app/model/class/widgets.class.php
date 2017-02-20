@@ -136,8 +136,8 @@ class Gestion_Widgets{
                 SUM(egr_valor) AS valor,
                 MONTHNAME(egr_fecha_creacion) AS mes
               FROM ges_egresos
-                WHERE ges_sedes_sed_codigo = ?
-                 GROUP BY MONTH(egr_fecha_creacion)";
+              WHERE ges_sedes_sed_codigo = ? AND YEAR(egr_fecha_creacion) = YEAR(CURDATE())
+              GROUP BY MONTH(egr_fecha_creacion)";
       $query = $pdo->prepare($sql);
       $query->execute(array($sede));
 

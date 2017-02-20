@@ -24,328 +24,37 @@
 
     		    <div class="col-lg-12" >
               <section class="panel corner-flip bg-inverse">
-              <div class="tabbable">
-                <ul class="nav nav-tabs chart-change">
-                  <!-- <li><a href="javascript:void(0)" data-change-type="bars" data-for-id="#stack-chart"><i class="fa fa-bar-chart-o"></i> &nbsp; Bars Chart</a></li> -->
-                  <li class="active">
-                    <a href="javascript:void(0)" data-change-type="lines" data-for-id="#stack-chart">
-                    <i class="fa fa-qrcode"></i> &nbsp; Ingresos año <?php echo date('Y'); ?></a>
-                  </li>
-                </ul>
+                <div class="tabbable">
+                  <ul class="nav nav-tabs chart-change">
+                    <li class="active"><a href="javascript:void(0)" data-change-type="lines" data-for-id="#income"><i class="fa fa-line-chart"></i> &nbsp; Ingresos año <?php echo date('Y'); ?></a></li>
+                  </ul>
 
-                    <div class="tab-content">
-                      <div class="tab-pane fade in active">
-                          <canvas id="income" width="600" height="400"></canvas>
-                          <script type="text/javascript">
-                          <?php
-                            $ingresos = Gestion_Widgets::Ingresosbysede($_usu_sed_codigo);
-                            $totIngresos = COUNT($ingresos);
-
-                          ?>
-
-
-                          var data = {
-                                labels: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
-                                datasets: [
-                                    {
-                                      fillColor : "rgba(143, 233, 32,0.4)",
-                                      strokeColor : "#8fe920",
-                                      pointColor : "#fff",
-                                      pointStrokeColor : "#9DB86D",
-                                      data: [
-                                        <?php
-
-                                                // SE VALIDA CAMPO A CAMPO PARA VER SI TIENE DATO EL MES
-                                                $meses = array('January','February','March','April','May','June','July','August','September','October','November','December' );
-                                                $flag_0=$flag_1=$flag_2=$flag_3=$flag_4=$flag_5=$flag_6=$flag_7=$flag_8=$flag_9=$flag_10=$flag_11=$flag_12 = "false";
-
-
-                                                for ($i=0; $i < 4 ; $i++) {
-                                                  # code...
-
-
-                                                    if($flag_0 == "false"){
-                                                      if(array_key_exists($i, $ingresos)){
-                                                         if($meses[0] == $ingresos[$i][1]){
-                                                           echo $ingresos[$i][0].",";
-                                                           $flag_0 = "true";
-                                                           continue;
-                                                         }else{
-                                                           echo "0,";
-                                                           $flag_0 = "true";
-                                                         }
-                                                      }else{
-                                                        echo "0,";
-                                                        $flag_0 = "true";
-                                                      }
-                                                    }
-
-
-                                                    if($flag_1 == "false"){
-                                                      if(array_key_exists($i, $ingresos)){
-                                                         if($meses[1] == $ingresos[$i][1]){
-                                                           echo $ingresos[$i][0].",";
-                                                           $flag_1 = "true";
-                                                           continue;
-                                                         }else{
-                                                           echo "0,";
-                                                           $flag_1 = "true";
-                                                         }
-                                                      }else{
-                                                        echo "0,";
-                                                        $flag_1 = "true";
-                                                      }
-                                                    }
-
-                                                    if($flag_2 == "false"){
-                                                      if(array_key_exists($i, $ingresos)){
-                                                         if($meses[2] == $ingresos[$i][1]){
-                                                           echo $ingresos[$i][0].",";
-                                                           $flag_2 = "true";
-                                                           continue;
-                                                         }else{
-                                                           echo "0,";
-                                                           $flag_2 = "true";
-                                                         }
-                                                      }else{
-                                                        echo "0,";
-                                                        $flag_2 = "true";
-                                                      }
-                                                    }
-
-                                                    if($flag_3 == "false"){
-                                                      if(array_key_exists($i, $ingresos)){
-                                                         if($meses[3] == $ingresos[$i][1]){
-                                                           echo $ingresos[$i][0].",";
-                                                           $flag_3 = "true";
-                                                           continue;
-                                                         }else{
-                                                           echo "0,";
-                                                           $flag_3 = "true";
-                                                         }
-                                                      }else{
-                                                        echo "0,";
-                                                        $flag_3 = "true";
-                                                      }
-                                                    }
-
-                                                    if($flag_4 == "false"){
-                                                      if(array_key_exists($i, $ingresos)){
-                                                         if($meses[4] == $ingresos[$i][1]){
-                                                           echo $ingresos[$i][0].",";
-                                                           $flag_4 = "true";
-                                                           continue;
-                                                         }else{
-                                                           echo "0,";
-                                                           $flag_4 = "true";
-                                                         }
-                                                      }else{
-                                                        echo "0,";
-                                                        $flag_4 = "true";
-                                                      }
-                                                    }
-
-                                                    if($flag_5 == "false"){
-                                                      if(array_key_exists($i, $ingresos)){
-                                                         if($meses[5] == $ingresos[$i][1]){
-                                                           echo $ingresos[$i][0].",";
-                                                           $flag_5 = "true";
-                                                           continue;
-                                                         }else{
-                                                           echo "0,";
-                                                           $flag_5 = "true";
-                                                         }
-                                                      }else{
-                                                        echo "0,";
-                                                        $flag_5 = "true";
-                                                      }
-                                                    }
-
-                                                    if($flag_6 == "false"){
-                                                      if(array_key_exists($i, $ingresos)){
-                                                         if($meses[6] == $ingresos[$i][1]){
-                                                           echo $ingresos[$i][0].",";
-                                                           $flag_6 = "true";
-                                                           continue;
-                                                         }else{
-                                                           echo "0,";
-                                                           $flag_6 = "true";
-                                                         }
-                                                      }else{
-                                                        echo "0,";
-                                                        $flag_6 = "true";
-                                                      }
-                                                    }
-
-                                                    if($flag_7 == "false"){
-                                                      if(array_key_exists($i, $ingresos)){
-                                                         if($meses[7] == $ingresos[$i][1]){
-                                                           echo $ingresos[$i][0].",";
-                                                           $flag_7 = "true";
-                                                           continue;
-                                                         }else{
-                                                           echo "0,";
-                                                           $flag_7 = "true";
-                                                         }
-                                                      }else{
-                                                        echo "0,";
-                                                        $flag_7 = "true";
-                                                      }
-                                                    }
-
-                                                    if($flag_8 == "false"){
-                                                      if(array_key_exists($i, $ingresos)){
-                                                         if($meses[8] == $ingresos[$i][1]){
-                                                           echo $ingresos[$i][0].",";
-                                                           $flag_8 = "true";
-                                                           continue;
-                                                         }else{
-                                                           echo "0,";
-                                                           $flag_8 = "true";
-                                                         }
-                                                      }else{
-                                                        echo "0,";
-                                                        $flag_8 = "true";
-                                                      }
-                                                    }
-
-                                                    if($flag_9 == "false"){
-                                                      if(array_key_exists($i, $ingresos)){
-                                                         if($meses[9] == $ingresos[$i][1]){
-                                                           echo $ingresos[$i][0].",";
-                                                           $flag_9 = "true";
-                                                           continue;
-                                                         }else{
-                                                           echo "0,";
-                                                           $flag_9 = "true";
-                                                         }
-                                                      }else{
-                                                        echo "0,";
-                                                        $flag_9 = "true";
-                                                      }
-                                                    }
-
-                                                    if($flag_10 == "false"){
-                                                      if(array_key_exists($i, $ingresos)){
-                                                         if($meses[10] == $ingresos[$i][1]){
-                                                           echo $ingresos[$i][0].",";
-                                                           $flag_10 = "true";
-                                                           continue;
-                                                         }else{
-                                                           echo "0,";
-                                                           $flag_10 = "true";
-                                                         }
-                                                      }else{
-                                                        echo "0,";
-                                                        $flag_10 = "true";
-                                                      }
-                                                    }
-
-                                                    if($flag_11 == "false"){
-                                                      if(array_key_exists($i, $ingresos)){
-                                                         if($meses[11] == $ingresos[$i][1]){
-                                                           echo $ingresos[$i][0].",";
-                                                           $flag_11 = "true";
-                                                           continue;
-                                                         }else{
-                                                           echo "0,";
-                                                           $flag_11 = "true";
-                                                         }
-                                                      }else{
-                                                        echo "0,";
-                                                        $flag_11 = "true";
-                                                      }
-                                                    }
-                                              }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                                        ?>
-                                      ]
-
-                                    }
-                                ]
-                            };
-
-                            var income = document.getElementById("income").getContext("2d");
-                            new Chart(income).Line(data);
-                          </script>
-                      </div>
+                  <div class="tab-content">
+                    <div class="tab-pane fade in active">
+                         <?php
+                         $ingresos = Gestion_Widgets::Ingresosbysede($_usu_sed_codigo);
+                         $totIngresos = COUNT($ingresos);
+                         include_once("../../includes/widget-ingresos.php"); ?>
                     </div>
-              </div>
+                  </div>
+                </div>
               </section>
               <!-- Fin widget ingresos  -->
 
               <section class="panel corner-flip bg-inverse">
               <div class="tabbable">
                 <ul class="nav nav-tabs chart-change">
-                  <li class="active"><a href="javascript:void(0)" data-change-type="bars" data-for-id="#stack-chart"><i class="fa fa-bar-chart-o"></i> &nbsp; Egresos</a></li>
-                 <!--  <li><a href="javascript:void(0)" data-change-type="lines" data-for-id="#stack-chart"><i class="fa fa-qrcode"></i> &nbsp; Egresos vs Ingresos - Lineas</a></li> -->
+                  <li class="active"><a href="javascript:void(0)" data-change-type="lines" data-for-id="#stack-chart"><i class="fa fa-line-chart"></i> &nbsp; Egresos vs Ingresos - Lineas</a></li>
                 </ul>
 
                   <div class="tab-content">
                     <div class="tab-pane fade in active">
-                      <div class="widget-chart chart-dark">
-                        <?php $egresos = Gestion_Widgets::EgresosBySede($_usu_sed_codigo);
-                          if(count($egresos) == 0){
-                            echo "<p> El laboratorio aun no tiene egresos</p>";
-                          }else{
-                        ?>
-                          <canvas id="income" width="600" height="400"></canvas>
-                          <script>
+                          <?php
+                          $egresos = Gestion_Widgets::EgresosBySede($_usu_sed_codigo);
+                          $totEgresos = COUNT($egresos);
+                          include_once("../../includes/widget-egresos.php"); 
+                          ?>
 
-                             var barData = {
-                                  labels : [<?php
-                                          foreach ($ingresos as $rowing) {
-                                            echo "'".$rowing[1]."',";
-                                          }
-                                        ?>],
-                                  datasets : [
-                                      {
-                                          label: "Ingresos",
-                                          fillColor : "rgba(73,188,170,0.4)",
-                                          strokeColor : "rgba(72,174,209,0.4)",
-                                          data : [<?php
-                                                    foreach ($ingresos as $rowing) {
-                                                      echo $rowing[0].",";
-                                                    }
-                                                  ?>]
-                                      },
-                                      {
-                                          label: "Egresos",
-                                          fillColor : "#f79696",
-                                          strokeColor : "#bd081c",
-                                          data : [<?php
-                                                    foreach ($egresos as $roweg) {
-                                                      echo $roweg[0].",";
-                                                    }
-                                                  ?>]
-                                      }
-                                  ]
-                              }
-
-                              var income = document.getElementById("income").getContext("2d");
-
-                              new Chart(income).Bar(barData);
-
-                          </script>
-                        <?php
-                         }
-                        ?>
-                      </div>
                     </div>
                   </div>
               </div>

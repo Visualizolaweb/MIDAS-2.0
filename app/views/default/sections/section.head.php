@@ -44,7 +44,7 @@ if($page == "login.php"){
 <script type="text/javascript" src="assets/js/jquery.min.js"></script>
 <script type="text/javascript" src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <script type="text/javascript" charset="utf8" src="assets/plugins/DataTables/js/jquery.dataTables.js"></script>
-<script type="text/javascript" src="assets/plugins/chart/Chart.min.js"></script>
+<script type="text/javascript" src="http://www.chartjs.org/assets/Chart.js"></script>
 
 <script>
 
