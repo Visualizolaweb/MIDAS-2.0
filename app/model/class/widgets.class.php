@@ -20,7 +20,11 @@ class Gestion_Widgets{
 
     $clientes_totales = $query->fetch(PDO::FETCH_BOTH);
 
+    if($clientes_totales[0] > 0){
     $promedio =  ($clientes_activos[0] / $clientes_totales[0]) * 100;
+    }else{
+        $promedio = 0;
+    }
 
     // Construccion del Widget
     echo '

@@ -313,7 +313,7 @@
 											</div>
 
 											<div class="form-group">
-													<label class="control-label">Departamentosss</label>
+													<label class="control-label">Departamentos</label>
 													<select id="countries_states2" name="txt_cli_dpto" class="form-control bfh-states" data-country="countries_states1" parsley-trigger="change"  parsley-required="true"> </select>
 								 			</div>
 
@@ -380,7 +380,7 @@
 
 								<div class="form-group">
 									<label class="control-label">Referido por:</label>
-								
+
 									<input name="txt_cli_referido" id="Filter_cli_referido"  type="text" class="form-control"  parsley-trigger="change"   placeholder="" >
 								</div>
 

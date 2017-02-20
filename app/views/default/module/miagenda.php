@@ -1,6 +1,10 @@
 <?php
+
 require_once("../../model/class/agenda.class.php");
 require_once("../../model/class/sedes.class.php");
+require_once("../../model/class/planes.class.php");
+require_once("../../model/class/clientes.class.php");
+
 
 if(isset($_GET["aces"])){
   $estudio_activo = $_GET["aces"];
@@ -9,18 +13,26 @@ if(isset($_GET["aces"])){
   $_GET["aces"] = 1;
 }
 
-$agenda = Gestion_Agenda::ReadbySede($_usu_sed_codigo, $estudio_activo);
-$sedes  = Gestion_Sedes::ReadbyID($_usu_sed_codigo);
+$cli_sede = $_usu_sed_codigo;
 
+$cli_codigo = base64_decode($_REQUEST["CID"]);
+
+$agenda  = Gestion_Agenda::ReadbySede($cli_sede, $estudio_activo);
+$sedes   = Gestion_Sedes::ReadbyID($cli_sede);
+$cliente = Gestion_Clientes::ReadbyID($cli_codigo);
+$cli_plan = $cliente["ges_planes_pla_codigo"];
+$plan    = Gestion_Planes::ReadbyID($cli_plan);
+
+$tipo_plan = strtolower($plan["pla_nombre"]);
 $numagenda = count($agenda);
 $estudios = $sedes["sed_estudios"];
-
-Gestion_Menu::View_submenu("clientes", $_usu_per_codigo, base64_decode($_GET["pagid"]));
-$icono = Gestion_Menu::Load_icon($row_paginas[0]);
 ?>
 
-<nav class="navbar navbar-inverse" style="margin-top:0">
+<nav class="navbar navbar-inverse">
   <div class="container-fluid">
+    <h3 class="navbar-header" >
+      <a class="navbar-brand" href="#" >AGENDA DE <?php echo $cliente["cli_nombre"].' '.$cliente["cli_apellido"]?></a>
+    </h3>
     <div>
       <ul class="nav navbar-nav">
 
@@ -31,7 +43,7 @@ $icono = Gestion_Menu::Load_icon($row_paginas[0]);
               }else{
                 $clase = "";
               }
-              echo "<li $clase><a href='dashboard.php?m=bW9kdWxlL2FnZW5kYV9wcm9ncmFtb2hvcmFyaW8ucGhw&pagid=UEFHLTEwMDA1NQ==&aces=$i'>ESTUDIO $i</a></li>";
+              echo "<li $clase><a href='dashboard.php?m=".base64_encode("module/miagenda.php")."&pagid=".base64_encode("PAG-10006")."&typ=".base64_encode($cli_plan)."&CID=".base64_encode($cli_codigo)."&aces=$i'>ESTUDIO $i</a></li>";
           }
 
         ?>
@@ -42,24 +54,25 @@ $icono = Gestion_Menu::Load_icon($row_paginas[0]);
 
 <div id="main" class="subpage">
 
-  <div id="md-ajax" class="modal fade md-stickTop" tabindex="-1">
+
+  <div id="md-ajax" class="modal " tabindex="-1">
   		<div class="modal-header bg-inverse">
   				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-  				<h3>Administrar citas</h3>
+  				<h3>ADQUIRIR PLAN</h3>
   		</div>
   		<div class="modal-body">
   		</div>
   </div>
 
   <div class="tabbable" id="tables">
-      <ul class="nav nav-tabs" data-provide="tabdrop">
-            <li><a href="#" class="change" data-change="prev"><i class="fa fa-chevron-left"></i></a></li>
-            <li><a href="#" class="change" data-change="next"><i class="fa fa-chevron-right"></i></a></li>
-            <li><a href="#" data-view="basicDay" data-toggle="tab" class="change-view">Citas de hoy</a></li>
-            <li class="active"><a href="#" data-view="agendaWeek" data-toggle="tab" class="change-view">Agenda de la Semana</a></li>
-            <li><a href="#" data-view="month" data-toggle="tab" class="change-view">Agenda del Mes</a></li>
 
-        </ul>
+        <ul class="nav nav-tabs" data-provide="tabdrop">
+              <li><a href="#" class="change" data-change="prev"><i class="fa fa-chevron-left"></i></a></li>
+              <li><a href="#" class="change" data-change="next"><i class="fa fa-chevron-right"></i></a></li>
+              <li class="active"><a href="#" data-view="agendaWeek" data-toggle="tab" class="change-view">Agenda de la Semana</a></li>
+              <li><a href="#" data-view="month" data-toggle="tab" class="change-view">Agenda del Mes</a></li>
+
+          </ul>
         <div class="tab-content">
             <div class="row">
 
@@ -68,26 +81,18 @@ $icono = Gestion_Menu::Load_icon($row_paginas[0]);
                 </div>
 
                 <div class="col-lg-2">
-                    <?php
-                      if(isset($_REQUEST["alert"])){
-                        if($_REQUEST["alert"] == true){
 
-                           $alert_type = base64_decode($_GET["alty"]);
-                           $alert_msn  = base64_decode($_GET["almsn"]);
-
-
-                        }
-                      }
-                    ?>
                     <div>
                         <input type="hidden" id="misede" value="<?php echo $_usu_sed_codigo; ?>">
                         <!-- <div id="btn-crearcita" class="btn btn-inverse btn-block"><i class="fa fa-file-text"></i> Crear cita</div> -->
-                      <!--  <div id="btn-movercita" class="btn btn-inverse btn-block"><i class="fa fa-arrows"></i> Mover cita</div><hr>-->
-<div id="btn-agendaUsuario" class="btn btn-primary btn-block"><i class="fa fa-calendar"></i> Agenda Usuario</div>
-                        <div id="btn-cancelacita" class="btn btn-inverse btn-block"><i class="fa fa-trash-o"></i> Cancelar cita</div><hr>
+                        <!--  <div id="btn-movercita" class="btn btn-inverse btn-block"><i class="fa fa-arrows"></i> Mover cita</div><hr>-->
+                        <!-- <div id="btn-cancelacita" class="btn btn-inverse btn-block"><i class="fa fa-trash-o"></i> Cancelar cita</div><hr> -->
                         <h4><strong>TABLA</strong> de colores </h4>
                         <hr>
                         <ul class="tooltip-area">
+                        <a href='#' data-toggle='tooltip' title='Horario Afiliado' data-container='body'  data-placement='bottom'>
+                            <span class="external-event label btn-block" style="background-color:#94D60A; width:20px; height:20px; display:inline-block"></span></a>
+
                         <a href='#' data-toggle='tooltip' title='Disponible' data-container='body'  data-placement='bottom'>
                           <span class="external-event label btn-block" style="background-color:#E5E9EC; width:20px; height:20px; display:inline-block"></span></a>
 
@@ -118,8 +123,8 @@ $icono = Gestion_Menu::Load_icon($row_paginas[0]);
 		var d = date.getDate();
 		var m = date.getMonth();
 		var y = date.getFullYear();
-
-
+    var plan_cupo = "<?php echo $plan['pla_cupo']?>";
+    var cupo_restante = 0;
 		$('#external-events span.external-event').draggable({
 				zIndex: 999,
 				revert: true,
@@ -164,12 +169,12 @@ $icono = Gestion_Menu::Load_icon($row_paginas[0]);
 				center: 'title',
 				right: ''
 			},
+      // defaultView: 'month',
       lang: 'es',
-      hiddenDays:[0],
       allDaySlot: false,
-			editable: false,
       disableResizing: true,
       eventDurationEditable: false,
+      hiddenDays:[0],
       defaultEventMinutes: 30,
       selectable: true,
 
@@ -177,53 +182,53 @@ $icono = Gestion_Menu::Load_icon($row_paginas[0]);
         $('body').modalmanager('loading');
   		  setTimeout(function(){
           var cli_sede = $("#misede").val();
-          var sala = '<?php echo $_GET["aces"]; ?>';
-          <?php
-            if(isset($_GET["typ"])){
-          ?>
-          var cliplan = '<?php echo base64_decode($_GET["typ"]);?>';
-          var cli_codigo = '<?php echo base64_decode($_GET["CID"]);?>';
-            $('#md-ajax').find(".modal-body").load('module/agenda_programo_nuevo_2.php',{misede:cli_sede, fechini:start, fechfin:end, sala:sala, cli_plan:cliplan, cliid: cli_codigo  }, function(){
-            $('#md-ajax').modal();
-          });
-          <?php
-            }else{
-          ?>
-            $('#md-ajax').find(".modal-body").load('module/agenda_programo_nuevo.php',{misede:cli_sede, fechini:start, fechfin:end, sala:sala}, function(){
-            $('#md-ajax').modal();
-          });
-          <?php
-            }
-          ?>
-
+          var cli_codigo = "<?php echo $cliente["cli_identificacion"]; ?>";
+          var pla_codigo = "<?php echo $cli_plan; ?>";
+          var sala = "<?php echo $estudio_activo ?>";
+  			  $('#md-ajax').find(".modal-body").load('module/miagenda_nuevo.php',{cli_codigo:cli_codigo,misede:cli_sede, fechini:start, fechfin:end, sala:sala}, function(){
+  			  $('#md-ajax').modal();
+  			});
   		  }, 2000);
 			},
 
-			droppable: false,
+			droppable: true,
       eventLimit: true, // allow "more" link when too many events
       minTime: '<?php echo $sedes["sed_horainicio"]; ?>',
       maxTime: '<?php echo $sedes["sed_horacierre"]; ?>',
       displayEventEnd: true,
-      slotEventOverlap: false,
+      slotEventOverlap: true,
       slotLabelFormat: 'h:mm tt',
       slotMinutes:30.1,
       axisFormat: 'h:mm tt',
-      now: '2015-11-11 15:30:00',
 			events: [
+
 
         <?php
         $x = 0;
         foreach ($agenda as $item) {
-          echo "{
+          echo "{";
+
+          if($item["cli_codigo"] == $cli_codigo){
+
+          echo "
+            id: '".$item[11]."',
+            title:  '".$item[0].' '.$item[1]."',
+            color: '#94D60A',
+
+      			editable: true,";
+          }else{
+            if($item["age_estado"] == 'Reservada'){
+              echo "color: '#da3f72',";
+            }else{
+              echo "color: '#69c9ff',";
+            }
+          }
+          echo "
             start:  '".$item[7]."T".$item[8]."',
             rendering: 'background',
-            overlap: false,";
+            overlap: false";
 
-              if($item["age_estado"] == 'Reservada'){
-                echo "color: '#da3f72'";
-              }else{
-                echo "color: '#69c9ff'";
-              }
+
 
 
           echo "}";
@@ -237,11 +242,22 @@ $icono = Gestion_Menu::Load_icon($row_paginas[0]);
 
         ?>
 			],
+
+      // eventClick: function(calEvent, jsEvent, view) {
+      //   // change the border color just for fun
+      //   $(this).css('background-color', '#da3f72');
+      //   $(this).css('border-color', '#da3f72');
+      //
+      // },
+
+
       eventDrop: function(event, delta, revertFunc) {
           $('#test').load("module/agenda_muevo.php",{cita:event.start, id:event.id});
-      },
+
+
+   }
 		});
-		$(".change-view").click(function(){
+    $(".change-view").click(function(){
 			 var data=$(this).data();
 			$('#calendar').fullCalendar( 'changeView', data.view );
 		});

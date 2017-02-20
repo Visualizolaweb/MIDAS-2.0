@@ -101,6 +101,16 @@ $(function() {
       }, 2000);
   });
 
+  $('#btn-agendaUsuario').on('click', function(){
+      $('body').modalmanager('loading');
+      setTimeout(function(){
+        var cli_sede = $("#misede").val();
+        $modal.find(".modal-body").load('module/agenda_porCliente.php',{misede:cli_sede}, function(){
+        $modal.modal();
+      });
+      }, 2000);
+  });
+
     $('#btn-movercita').on('click', function(){
         $('body').modalmanager('loading');
         setTimeout(function(){
@@ -375,7 +385,7 @@ $('#botonFoto').on('click', function(e) {
     oContexto = oFoto[0].getContext('2d');
     oContexto.drawImage(oCamara[0], 0, 0, w, h);
 
-		if (datosVideo && datosVideo.stop) {
+		if (datosVideo.streamVideo && datosVideo.stop) {
 				datosVideo.stop();
 				window.URL.revokeObjectURL(datosVideo.url);
 		}
@@ -389,6 +399,8 @@ $('#botonFoto').on('click', function(e) {
     //Mostramos la foto y el boton de repetir foto
     document.getElementById('contefoto').style.display = "block";
     document.getElementById('botonIniciar2').style.display = "block";
+
+
 
 		var canvas = document.getElementById('foto');
     document.getElementById('mifoto').value = canvas.toDataURL('image/png');

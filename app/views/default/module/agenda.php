@@ -84,7 +84,7 @@ $estudios = $sedes["sed_estudios"];
                     <div>
                         <input type="hidden" id="misede" value="<?php echo $_usu_sed_codigo; ?>">
                         <!-- <div id="btn-crearcita" class="btn btn-inverse btn-block"><i class="fa fa-file-text"></i> Crear cita</div> -->
-                        <div id="btn-movercita" class="btn btn-primary btn-block"><i class="fa fa-calendar"></i> Agenda Usuario</div>
+                        <div id="btn-agendaUsuario" class="btn btn-primary btn-block"><i class="fa fa-calendar"></i> Agenda Usuario</div>
                         <div id="btn-cancelacita" class="btn btn-inverse btn-block"><i class="fa fa-trash-o"></i> Cancelar cita</div><hr>
                         <h4  ><strong>TABLA</strong> de colores </h4>
                         <hr>

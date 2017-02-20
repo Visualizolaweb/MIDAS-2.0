@@ -4,7 +4,7 @@ require_once("../../../model/class/clientes.class.php");
 require_once("../../../model/class/sedes.class.php");
 require_once("../../../model/class/planes.class.php");
 
-
+$dividido = "no";
 if(isset($_REQUEST["fechini"])){
     $fecha = $_REQUEST["fechini"];
     $mes = $fecha[4].$fecha[5].$fecha[6];
