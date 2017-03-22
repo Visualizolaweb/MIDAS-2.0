@@ -14,17 +14,18 @@
         $num_codigo           = $_POST["txt_num_codigo"];
         $num_recibocaja       = $_POST["txt_num_recibocaja"] ? $_POST["txt_num_recibocaja"]: 0 ;
         $num_comprobantepago  = $_POST["txt_num_comprobantepago"] ? $_POST["txt_num_comprobantepago"]: 0;
-        $num_notacredito      = $_POST["txt_num_notacredito"] ? $_POST["txt_num_notacredito"]: 0;
+        $num_notadeb          = $_POST["txt_num_notadebito"] ? $_POST["txt_num_notadebito"]: 0;
+        $num_notacred         = $_POST["txt_num_notacredito"] ? $_POST["txt_num_notacredito"]: 0;
         $num_remisiones       = $_POST["txt_num_remisiones"] ? $_POST["txt_num_remisiones"]: 0;
 
 
         try{
           if((isset($num_codigo))AND($num_codigo != "")){
-            Gestion_Numeracion::Update($num_codigo, $num_recibocaja, $num_comprobantepago, $num_notacredito, $num_remisiones);
+            Gestion_Numeracion::Update($num_codigo, $num_recibocaja, $num_comprobantepago, $num_notacredito, $num_notadeb, $num_remisiones);
             $alert_type = base64_encode("success");
             $alert_msn  = base64_encode("Listo! tu registro ha sido modificado correctamente. ");
           }else{
-            Gestion_Numeracion::Create($num_recibocaja, $num_comprobantepago, $num_notacredito, $num_remisiones, $_usu_sed_codigo);
+            Gestion_Numeracion::Create($num_recibocaja, $num_comprobantepago, $num_notacredito, $num_notadeb, $num_remisiones, $_usu_sed_codigo);
             $alert_type = base64_encode("success");
             $alert_msn  = base64_encode("Listo! tu registro ha sido guardado correctamente. ");
           }

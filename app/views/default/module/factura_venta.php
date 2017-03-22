@@ -21,7 +21,7 @@
             <h2> <?php echo $row_paginas[1];?></h2>
             <?php if($row_permiso["per_C"]==1){ ?>
                   	<a href="dashboard.php?m=<?php echo base64_encode("module/factura_nueva.php");?>&per=<?php echo base64_encode($_usu_per_codigo);?>&pag=<?php echo base64_encode($row_paginas[0]);?>" class="btn btn-primary"><i class="fa fa-plus"></i> Nueva factura de venta</a>
-    				<?php } ?>
+            <?php } ?>
             <span><?php echo $row_paginas[2];?></span>
 			    </header>
 		    </div>
@@ -71,22 +71,22 @@
                           echo " <a href='generar_pdf_factura.php?e=1&fc=".$row[0]."' target='blank' type='button' class='btn btn-detalle btn-datagrid btn-collapse' data-placement='bottom' title='Ver Factura'><i class='fa fa-search'></i> </a>";
                           echo " <a href='generar_pdf_factura.php?e=3&fc=".$row[0]."' target='blank' type='button' class='btn btn-detalle btn-datagrid btn-collapse' data-placement='bottom' title='Imprimir Factura'><i class='fa fa-print'></i> </a>";
                           echo " <a href='generar_pdf_factura.php?e=2&fc=".$row[0]."' target='blank' type='button' class='btn btn-detalle btn-datagrid btn-collapse' data-placement='bottom' title='Descargar Factura'><i class='fa fa-download'></i> </a>";
-                          
+
                           if(($row[6] == 'Cerrada') OR ($row[6] == 'Anulada')){
                             echo " <a href='' type='button' class='btn btn-detalle btn-datagrid disabled btn-collapse' data-placement='bottom' title='Agregar pago'><i class='fa fa-dollar'></i> </a>";
-                            echo " <a class='btn btn-delete btn-datagrid md-effect disabled' ><i class='fa fa-times-circle'></i> </a>";                              
+                            echo " <a class='btn btn-delete btn-datagrid md-effect disabled' ><i class='fa fa-times-circle'></i> </a>";
                           }
 
                           if(($row[6] == 'Abierta') OR ($row[6] == 'Sin Pago')){
                             echo " <a href='dashboard.php?m=".base64_encode("module/factura_pago.php")."&pid=".base64_encode($row[0])."&per=".base64_encode($_usu_per_codigo)."&pag=".base64_encode($row_paginas[0])."&fai=".base64_encode($row[0])."' type='button' class='btn btn-detalle btn-datagrid btn-collapse' data-placement='bottom' title='Agregar pago'><i class='fa fa-dollar'></i> </a>";
                             if(($row["fac_pagado"]) != 0){
-                                echo " <a href='' target='blank' type='button' class='btn btn-delete btn-datagrid btn-collapse disabled' data-placement='bottom' title='Anular Factura'><i class='fa fa-times-circle'></i> </a>";    
+                                echo " <a href='' target='blank' type='button' class='btn btn-delete btn-datagrid btn-collapse disabled' data-placement='bottom' title='Anular Factura'><i class='fa fa-times-circle'></i> </a>";
                             }else{
-                                echo " <a class='btn btn-delete btn-datagrid md-effect' data-effect='md-flipVer' id='".$row[0]."'><i class='fa fa-times-circle'></i> </a>";  
+                                echo " <a class='btn btn-delete btn-datagrid md-effect' data-effect='md-flipVer' id='".$row[0]."'><i class='fa fa-times-circle'></i> </a>";
                             }
 
-                          } 
-                         
+                          }
+
                           echo "</td>";
                         echo "</tr>";
 

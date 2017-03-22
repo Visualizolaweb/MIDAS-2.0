@@ -1,7 +1,6 @@
 <?php
-  Gestion_Menu::View_submenu("ingresos", $_usu_per_codigo, $row_paginas[0]);
+  Gestion_Menu::View_submenu("egresos", $_usu_per_codigo, $row_paginas[0]);
   $icono = Gestion_Menu::Load_icon($row_paginas[0]);
-
 ?>
 
 <div id="main" class="subpage">
@@ -14,7 +13,7 @@
             <h2> <?php echo $row_paginas[1];?></h2>
             <?php
       				if($row_permiso["per_C"]==1){
-      					echo '<a href="dashboard.php?m='.base64_encode("module/nota_debito_nuevo.php").'&pagid='.$pagid.'" class="btn btn-primary"><i class="fa fa-plus"></i> Nota Débito</a>';
+      					echo '<a href="dashboard.php?m='.base64_encode("module/nota_credito_nuevo.php").'&pagid='.$pagid.'" class="btn btn-primary"><i class="fa fa-plus"></i> Nota Crédito</a>';
       				}
       			?>
             <span><?php echo $row_paginas[2];?></span>
@@ -30,7 +29,7 @@
             <table id="datagrid" class="display" cellspacing="0" width="100%">
               <thead>
                   <tr>
-                      <th width="13%">Nota Débito N°</th>
+                      <th width="13%">Nota Crédito N°</th>
                       <th width="15%">Banco</th>
                       <th width="25%">Cliente</th>
                       <th width="5%">Total</th>
@@ -40,22 +39,22 @@
               </thead>
               <tbody>
                 <?php
-                      require_once("../../model/class/notadebito.class.php");
+                      require_once("../../model/class/notacredito.class.php");
                       require_once("../../model/class/cuentasbanco.class.php");
-                      $stmt = Gestion_NotaDebito::Notas_DebitoBySede($_usu_sed_codigo);
+                      $stmt = Gestion_NotaCredito::Notas_CreditoBySede($_usu_sed_codigo);
                       $pageparams = basename($_SERVER["REQUEST_URI"]);
 
                       foreach($stmt as $row){
-                          $banco = Gestion_Cuentasbanco::Readby($row['ges_finanzas_fin_codigo']);
+                        $banco = Gestion_Cuentasbanco::Readby($row['ges_finanzas_fin_codigo']);
                         echo "<tr>";
-                          echo "<td style='border-left: 1px solid #ddd'>".$row['nota_numero']."</td>";
+                          echo "<td style='border-left: 1px solid #ddd'>".$row['notacre_numero']."</td>";
                           echo "<td>".$banco["fin_numero_cuenta"]."-".$banco["ban_banco"]."</td>";
                           echo "<td>".$row["cli_nombre"]. " ".$row["cli_apellido"]."</td>";
-                          echo "<td class='text-right'>$ ".number_format($row["nota_total"])."</td>";
-                          echo "<td>".$row["nota_fecha"]."</td>";
+                          echo "<td class='text-right'>$ ".number_format($row["notacre_total"])."</td>";
+                          echo "<td>".$row["notacre_fecha"]."</td>";
                           echo "<td style='text-align:center;'>";
                           if($row_permiso["per_R"]==1){
-                            echo "<a href='dashboard.php?m=".base64_encode("module/nota_detalle.php")."&pid=".base64_encode($row['nota_numero'])."' type='button' class='btn btn-detalle btn-datagrid'><i class='fa fa-search-plus'></i></a> ";
+                            echo "<a href='dashboard.php?m=".base64_encode("module/notacredito_detalle.php")."&pid=".base64_encode($row[1])."' type='button' class='btn btn-detalle btn-datagrid'><i class='fa fa-search-plus'></i></a> ";
                           }
                           echo "</td>";
                         echo "</tr>";

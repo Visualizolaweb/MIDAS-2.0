@@ -1,5 +1,5 @@
 <?php
-Gestion_Menu::View_submenu("egresos", $_usu_per_codigo, $row_paginas[0]);
+Gestion_Menu::View_submenu("ingresos", $_usu_per_codigo, $row_paginas[0]);
 $icono = Gestion_Menu::Load_icon($row_paginas[0]);
 ?>
 
@@ -12,7 +12,7 @@ $icono = Gestion_Menu::Load_icon($row_paginas[0]);
             <div class="icon"><i class="<?php echo $icono["men_icono"]; ?>"></i></div>
             <h2> <?php echo $row_paginas[1];?></h2>
             <?php	if($row_permiso["per_C"]==1){
-    				      echo '<a href="dashboard.php?m='.base64_encode("module/egreso_nuevo.php").'&pagid='.$pagid.'" class="btn btn-primary"><i class="fa fa-plus"></i> Nuevo Egreso</a>';
+    				      echo '<a href="dashboard.php?m='.base64_encode("module/ingreso_nuevo.php").'&pagid='.$pagid.'" class="btn btn-primary"><i class="fa fa-plus"></i> Nuevo Ingreso</a>';
     				}?>
             <span><?php echo $row_paginas[2];?></span>
           </header>
@@ -42,9 +42,9 @@ $icono = Gestion_Menu::Load_icon($row_paginas[0]);
                 <?php
 
                       require_once("../../conf.ini.php");
-                      require_once("../../model/class/egresos.class.php");
+                      require_once("../../model/class/ingresos.class.php");
 
-                      $stmt = Gestion_Egresos::ReadAllby($_usu_sed_codigo);
+                      $stmt = Gestion_Ingresos::ReadAllby($_usu_sed_codigo);
                       # --> conocer la pagina en la que estoy con las variables
                       $pageparams = basename($_SERVER["REQUEST_URI"]);
 
@@ -60,11 +60,11 @@ $icono = Gestion_Menu::Load_icon($row_paginas[0]);
                           echo "<td>";
 
 						              if($row_permiso["per_R"]==1){
-                              echo "<a href='dashboard.php?m=".base64_encode("module/egresos_detalle.php")."&pid=".base64_encode($row[0])."' type='button' class='btn btn-detalle btn-datagrid'><i class='fa fa-search-plus'></i> </a>";
+                              echo "<a href='dashboard.php?m=".base64_encode("module/ingresos_detalle.php")."&pid=".base64_encode($row[0])."' type='button' class='btn btn-detalle btn-datagrid'><i class='fa fa-search-plus'></i> </a>";
                           }
 
             						  if($row_permiso["per_U"]==1){
-            							  echo " <a href='dashboard.php?m=".base64_encode("module/egreso_editar.php")."&pid=".base64_encode($row[0])."' type='button' class='btn btn-edit btn-datagrid'><i class='fa fa-pencil'></i> </a>";
+            							  echo " <a href='dashboard.php?m=".base64_encode("module/ingreso_editar.php")."&pid=".base64_encode($row[0])."' type='button' class='btn btn-edit btn-datagrid'><i class='fa fa-pencil'></i> </a>";
             						  }
 
             						  if($row_permiso["per_D"]==1){
@@ -90,7 +90,7 @@ $icono = Gestion_Menu::Load_icon($row_paginas[0]);
 
                 <form action="../../controller/crud_egresos.controller.php" method="post">
                   <input type="hidden" id="codigoid" name="codigoid" value="" readonly/>
-                  <p>Esta seguro que desea eliminar el egreso <span class="label bg-warning" id="innertext"></span></p>
+                  <p>Esta seguro que desea eliminar el ingreso <span class="label bg-warning" id="innertext"></span></p>
                   <div style="text-align: right">
                     <button type='submit' class='btn btn-primary' value="eliminar" name="btn_continue"><i class='fa fa-thumbs-o-up'></i> Continuar</button>
                     <button type='button' data-dismiss="modal" class='btn btn-info'><i class='fa fa-thumbs-o-down'></i> Cancelar</button>

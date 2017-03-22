@@ -1,18 +1,18 @@
 <?php
-  Gestion_Menu::View_submenu("ingresos", $_usu_per_codigo, "PAG-100021");
+  Gestion_Menu::View_submenu("egresos", $_usu_per_codigo, "PAG-100019");
   $icono = Gestion_Menu::Load_icon($row_paginas[0]);
-  require_once("../../model/class/notadebito.class.php");
+  require_once("../../model/class/notacredito.class.php");
   require_once("../../model/class/impuestos.class.php");
 
   $impuestos = Gestion_Impuestos::ReadAll();
 
-  $codigo_nota_debito = Gestion_NotaDebito::siguientecodigo($_usu_sed_codigo);
+  $codigo_nota_credito = Gestion_NotaCredito::siguientecodigo($_usu_sed_codigo);
 
-  if(count($codigo_nota_debito[0])< 1){
-    $codigo_nota_debito = Gestion_NotaDebito::cod_origen($_usu_sed_codigo);
-    $numero_notadebito = $codigo_nota_debito["num_notadebito"];
+  if(count($codigo_nota_credito[0])< 1){
+    $codigo_nota_credito = Gestion_NotaCredito::cod_origen($_usu_sed_codigo);
+    $numero_notacredito = $codigo_nota_credito["num_notacredito"];
   }else{
-    $numero_notadebito = $codigo_nota_debito[0] + 1;
+    $numero_notacredito = $codigo_nota_credito[0] + 1;
   }
 ?>
 
@@ -23,20 +23,20 @@
         <div class="panel">
           <header class="panel-heading"><meta http-equiv="Content-Type" content="text/html; charset=gb18030">
             <h3>
-              <i class="fa fa-plus"></i><strong> NUEVA</strong> NOTA DÉBITO
-              <span style="float:right">Nota Débito Nº <?php echo $numero_notadebito; ?> </span>
+              <i class="fa fa-plus"></i><strong> NUEVA</strong> NOTA CRÉDITO
+              <span style="float:right">Nota Crédito Nº <?php echo $numero_notacredito;?> </span>
             </h3>
           </header>
           <div class="panel-body">
 
-            <form name="frm_create" parsley-validate action="../../controller/crud_notadebito.controller.php" method="post">
+            <form name="frm_create" parsley-validate action="../../controller/crud_notacredito.controller.php" method="post">
               <input name="txt_cli_codigo" id="txt_cli_codigo" type="hidden">
-              <input name="txt_nota_numero" id="txt_nota_numero" type="hidden" value="<?php echo $numero_notadebito;?>">
+              <input name="txt_nota_numero" id="txt_nota_numero" type="hidden" value="<?php echo $numero_notacredito;?>">
 
               <input name="index" id="index" type="hidden">
 
               <div class="row">
-                <div class="col-md-5">
+                <div class="col-xs-5">
                   <div class="form-group">
                     <label>Relacionar con las Facturas N°</span></label>
                     <select data-placeholder="Seleccionar Facturas" name="txt_facturas[]" multiple style="width:350px;"  class="chosen-select form-control" tabindex="8">
@@ -51,23 +51,23 @@
                     </select>
                   </div>
                 </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label class="control-label">N°. Cuenta</label>
-                      <select  name="txt_egr_cuenta"  class="form-control"  parsley-trigger="change" parsley-required="true">
-                        <option value="">Seleccione</option>
-                          <?php
-                            require_once("../../model/class/cuentasbanco.class.php");
-                            $cuentas = Gestion_Cuentasbanco::ReadAll($_usu_sed_codigo);
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="control-label">N°. Cuenta</label>
+                    <select  name="txt_egr_cuenta"  class="form-control"  parsley-trigger="change" parsley-required="true">
+                      <option value="">Seleccione</option>
+                        <?php
+                          require_once("../../model/class/cuentasbanco.class.php");
+                          $cuentas = Gestion_Cuentasbanco::ReadAll($_usu_sed_codigo);
 
-                            foreach ($cuentas as $row) {
-                              echo "<option value='".$row["fin_codigo"]."'>".$row["fin_numero_cuenta"]."-".$row["ban_banco"]."</option>";
-                            }
-                           ?>
-                      </select>
-                    </div>
+                          foreach ($cuentas as $row) {
+                            echo "<option value='".$row["fin_codigo"]."'>".$row["fin_numero_cuenta"]."-".$row["ban_banco"]."</option>";
+                          }
+                         ?>
+                    </select>
                   </div>
                 </div>
+              </div>
 
               <div class="row">
                 <div class="col-xs-5">
@@ -133,13 +133,13 @@
                   <label>Total</label>
                   <input type="text" class="form-control" readonly parsley-required="true" id="gran_total" name="gran_total"/>
                 </div>
-              </div><br>
+              </div>
 
               <div class="row">
                 <div class="col-md-12">
                   <div class="form-group">
-                    <button type="submit" class="btn btn-primary btn-block" name="btn_continue" value="guardar">Guardar Nota Débito</button>
-                    <a href="dashboard.php?m=<?php echo base64_encode("module/nota_debito.php"); ?>&pagid=<?php echo base64_encode("PAG-100021"); ?>" class="btn btn-info btn-block">Cancelar</a>
+                    <button type="submit" class="btn btn-primary btn-block" name="btn_continue" value="guardar">Guardar Nota Crédito</button>
+                    <a href="dashboard.php?m=<?php echo base64_encode("module/nota_credito.php"); ?>&pagid=<?php echo base64_encode("PAG-100067"); ?>" class="btn btn-info btn-block">Cancelar</a>
                   </div>
                 </div>
               </div>

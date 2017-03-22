@@ -1,5 +1,5 @@
 <!-- Jquery Library -->
- <script type="text/javascript" src="assets/plugins/bootstrap/bootstrap.min.js"></script>
+<script type="text/javascript" src="assets/plugins/bootstrap/bootstrap.min.js"></script>
 <!-- Modernizr Library For HTML5 And CSS3 -->
 <script type="text/javascript" src="assets/js/modernizr/modernizr.js"></script>
 <script type="text/javascript" src="assets/plugins/mmenu/jquery.mmenu.js"></script>
@@ -21,7 +21,7 @@
 
  <script type="text/javascript" src="assets/js/typeahead.min.js"></script>
 
-
+<script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.4/numeral.min.js"></script>
 
 <script type="text/javascript" src="assets/js/chosen.jquery.js"></script>
 <script type="text/javascript">
@@ -527,6 +527,167 @@ $(document).ready(function(){
       remote : '../../includes/carga_clientes.php?query=%QUERY'
     });
 
+});
+
+// ********************* autocomplete *****************
+$(function() {
+      $("#txt_cliente").autocomplete({
+        source: "../../includes/carga_clientes_debito.php",
+        minLength: 1,
+          select: function(event, ui) {
+      		  event.preventDefault();
+            $('#txt_cliente').val(ui.item.txt_cliente);
+        		$('#txt_cli_codigo').val(ui.item.txt_cli_codigo);
+            var cli_codigo = ui.item.txt_cli_codigo;
+            $('#txt_identificacion').val(ui.item.txt_identificacion);
+            $('#txt_fecha').val(ui.item.txt_fecha);
+
+            if($("#txt_cli_codigo").val()!=''){
+              $("#p_scents input").prop('disabled', false);
+              $("#addScnt").prop('disabled', false);
+            }
+
+            $.post("../../includes/combo_facturasclientes.php",{clicod:cli_codigo},function(data){
+              $(".combocliente").html(data);
+            });
+          }
+      });
+});
+
+/******************* FUNCION PARA BUSCAR FATURAS Y SUS VALORES *****************/
+
+
+function buscarFact(index){
+   $("#facturaN"+index).change( function(){
+          var term= $("#facturaN"+index).val();
+          var cus= $("#txt_cli_codigo").val();
+          var url ="../../includes/carga_facturas.php?cus="+cus;
+          $.ajax({
+                 type:'POST',
+                 url:url,
+                 data:'term='+term,
+                 success:function(data){
+                         var resultado = data.split();
+                         alert("resultado " + resultado);
+                         $('#debe'+index).val(resultado[0]);
+                 }
+          });
+          return false;
+   });
+}
+
+
+function validDebit(index){
+  $('#index').val(index);
+  $("#producto"+index).autocomplete({
+    source: "../../includes/carga_nota_debito.php",
+    minLength: 1,
+        select: function(event, ui) {
+        event.preventDefault();
+        $('#codigo_producto'+index).val(ui.item.codigo_prod);
+        $('#producto'+index).val(ui.item.producto);
+        $('#precio_uni'+index).val(ui.item.precio_uni);
+      }
+  });
+}
+
+/******* Deshabilita campos de la tabla si no hay cliente elegido ***********/
+$(document).ready(function() {
+  if($("#txt_cli_codigo").val()==''){
+    $("#p_scents input").prop('disabled', true);
+    $("#addScnt").prop('disabled', true);
+  }
+});
+
+/**************** CALCULAR EL TOTAL DE DEUDA DE UNA FACTURA EN PAGOS ************************/
+
+function Calcula_Total_fact(index){
+  var total = $('#debe' + index).val() - $('#pago' + index).val();
+  $('#total' + index).val(total);
+
+  var debe = parseInt($('#debe' + index).val());
+  var paga = parseInt($('#pago' + index).val());
+
+  if(paga > debe){
+    $("#btn_continue").prop('disabled', true);
+    $("#btn_continue").removeClass('btn-primary');
+  }else if(paga < debe){
+    $("#btn_continue").prop('disabled', false);
+    $("#btn_continue").addClass('btn-primary');
+  }
+
+
+}
+
+
+/**************** CALCULAR EL TOTAL DE LOS PRODUCTOS EN NOTA DEBITO*/
+
+function Calcula_Total(index){
+  var total = $('#precio_uni' + index +'').val() * $('#cantidad' + index +'').val();
+    $('#total' + index +'').val(total);
+    calcular_grantotal();
+}
+
+/**************** CALCULAR EL GRAN TOTAL DE LOS PRODUCTOS EN NOTA DEBITO*/
+
+function calcular_grantotal() {
+	importe_total = 0
+	$(".gran_total").each(
+		function(index, value) {
+			importe_total = importe_total + eval($(this).val());
+		}
+	);
+	$("#gran_total").val(importe_total);
+}
+
+/* CODIGO PARA AGREGAR MAS CAMPOS A LA TABLA DE NOTA DEBITO*/
+
+$(function() {
+    var scntDiv = $('#p_scents');
+    var i = $('#p_scents').size() + 1;
+
+    $('#addScnt').live('click', function() {
+            $('<div class="itemParent"><div class="row itemParent"><div class="col-md-12"><div class="col-md-2"><input type="" class="form-control" required onkeypress="validDebit(' + i +')" id="producto' + i +'" name="producto' + i +'" /><input name="codigo_producto' + i +'" id="codigo_producto' + i +'" type="hidden"></div><div class="col-md-2"><input type="" placeholder="$ 0" class="form-control"" id="precio_uni' + i +'" name="precio_uni' + i +'" /></div><div class="col-md-1"><input type="" onkeyup="Calcula_Total(' + i +');" class="form-control""  id="cantidad' + i +'" required name="cantidad' + i +'" /></div><div class="col-md-4"><input type="" class="form-control""  id="observaciones' + i +'"  name="observaciones' + i +'"/></div><div class="col-md-2"><input type="text" placeholder="$ 0" class="form-control gran_total" readonly id="total' + i +'" name="total' + i + '"/></div><div class="col-md-1"><button class="btn btn-danger" id="remScnt" type="button"><i class="glyphicon glyphicon-minus"></i></button></div></div></div>').appendTo(scntDiv);
+            i++;
+            return false;
+    });
+
+    $('#remScnt').live('click', function() {
+            if( i > 2 ) {
+                    $(this).parents('div.itemParent').remove();
+                    i--;
+            }
+            return false;
+    });
+});
+
+
+/****** CODIGO PARA AGREGAR MAS CAMPOS A LA TABLA FACTURAS EN PAGOS ***********/
+
+$(function() {
+    var scntDiv = $('#p_scents');
+    var i = $('#p_scents').size() + 1;
+
+    $('#addFacts').live('click', function() {
+
+            $('<div class="itemParent"><div class="row itemParent"><div class="col-md-12"><div class="col-md-2"><select class="buscar form-control" onchange="buscarFact(' + i +')" id="facturaN' + i +'"  name="FacturaN' + i +'"></select></div><div class="col-md-2"><input type="" placeholder="$ 0" class="form-control" id="debe' + i +'" name="debe' + i +'" /></div><div class="col-md-2"><input type="" onkeyup="Calcula_Total_fact(' + i +');" class="form-control""  id="pago' + i +'" required name="pago' + i +'" /></div><div class="col-md-3"><input type="" class="form-control""  id="observaciones' + i +'"  name="observaciones' + i +'"/></div><div class="col-md-2"><input type="text" placeholder="$ 0" class="form-control" readonly id="total' + i +'" name="total' + i +'"/></div><div class="col-md-1"><button class="btn btn-danger" id="remScnt" type="button"><i class="glyphicon glyphicon-minus"></i></button></div></div></div>').appendTo(scntDiv);
+            var cli_codigo = $("#txt_cli_codigo").val();
+
+            $.post("../../includes/combo_facturasclientes.php",{clicod:cli_codigo},function(data){
+              var x = i - 1;
+              $("#facturaN"+x).html(data);
+            });
+            i++;
+            return false;
+    });
+
+    $('#remScnt').live('click', function() {
+            if( i > 2 ) {
+                    $(this).parents('div.itemParent').remove();
+                    i--;
+            }
+            return false;
+    });
 });
 
 </script>

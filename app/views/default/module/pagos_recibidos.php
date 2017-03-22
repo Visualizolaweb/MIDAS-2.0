@@ -19,9 +19,9 @@
           <header class="panel-heading">
             <div class="icon"><i class="fa fa-paste"></i></div>
             <h2> <?php echo $row_paginas[1];?></h2>
-            <!-- <?php if($row_permiso["per_C"]==1){ ?>
-                  	<a href="dashboard.php?m=<?php echo base64_encode("module/factura_nueva.php");?>&per=<?php echo base64_encode($_usu_per_codigo);?>&pag=<?php echo base64_encode($row_paginas[0]);?>" class="btn btn-primary"><i class="fa fa-plus"></i> Nueva factura de venta</a>
-    				<?php } ?> -->
+             <?php if($row_permiso["per_C"]==1){ ?>
+                  	<a href="dashboard.php?m=<?php echo base64_encode("module/pagos_recibidos_nuevo.php");?>&per=<?php echo base64_encode($_usu_per_codigo);?>&pag=<?php echo base64_encode($row_paginas[0]);?>" class="btn btn-primary"><i class="fa fa-plus"></i> Nuevo Pago</a>
+            <?php } ?>
             <span><?php echo $row_paginas[2];?></span>
 			    </header>
 		    </div>
@@ -60,7 +60,7 @@
 
                           echo " <a href='generar_pdf_reciboCaja.php?e=3&fc=".$row['pag_codigo']."' target='blank' type='button' class='btn btn-detalle btn-datagrid btn-collapse' data-placement='bottom' title='Imprimir Recibo de Caja'><i class='fa fa-print'></i> </a>";
                           echo " <a href='generar_pdf_reciboCaja.php?e=2&fc=".$row['pag_codigo']."' target='blank' type='button' class='btn btn-detalle btn-datagrid btn-collapse' data-placement='bottom' title='Descargar Recibo de Caja'><i class='fa fa-download'></i> </a>";
-                          echo " <a class='btn btn-delete btn-datagrid md-effect' data-effect='md-flipVer' id='".$row['pag_codigo']."'><i class='fa fa-times-circle'></i> </a>";  
+                          echo " <a class='btn btn-delete btn-datagrid md-effect' data-effect='md-flipVer' id='".$row['pag_codigo']."'><i class='fa fa-times-circle'></i> </a>";
                           echo "</td>";
                         echo "</tr>";
 

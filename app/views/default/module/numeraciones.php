@@ -42,20 +42,26 @@ $icono = Gestion_Menu::Load_icon($row_paginas[0]);
                           <label >Siguiente número de comprobantes de pago</label>
                           <input value="<?php echo $row[2];?>" name="txt_num_comprobantepago"  type="text" class="form-control" parsley-trigger="change" parsley-required="true">
                        </div>
+                     </div>
 
+                     <div class="col-md-6">
+                       <div class="form-group">
+                          <input type="hidden" value="<?php echo $row[0]?>" name="txt_num_codigo">
+                          <label >Siguiente número de Notas Débito</label>
+                          <input value="<?php echo $row[3];?>" name="txt_num_notadebito"  type="text" class="form-control" parsley-trigger="change" parsley-required="true">
+                       </div>
 
+                       <div class="form-group">
+                          <label >Siguiente número de Notas Crédito</label>
+                          <input value="<?php echo $row[4];?>" name="txt_num_notacredito"  type="text" class="form-control" parsley-trigger="change" parsley-required="true">
+                       </div>
                      </div>
 
 
                     <div class="col-md-6">
                        <div class="form-group">
                           <label >Siguiente número de remisiones</label>
-                          <input value="<?php echo $row[4];?>" name="txt_num_remisiones"  type="text" class="form-control" parsley-trigger="change" parsley-required="true">
-                       </div>
-
-                       <div class="form-group">
-                          <label >Siguiente número de nota crédito</label>
-                          <input value="<?php echo $row[3];?>" name="txt_num_notacredito"  type="text" class="form-control" parsley-trigger="change" parsley-required="true">
+                          <input value="<?php echo $row[5];?>" name="txt_num_remisiones"  type="text" class="form-control" parsley-trigger="change" parsley-required="true">
                        </div>
                      </div>
 

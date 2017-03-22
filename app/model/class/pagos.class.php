@@ -72,13 +72,13 @@ WHERE ges_factura.ges_sedes_sed_codigo = '".$sede."'";
         $valor_porpagar = str_replace(',', '', $datos_pago["fac_porpagar"]);
 
         $valor_porpagar = number_format($valor_porpagar + $datos_pago['pag_valor']);
- 
-    
+
+
 
         $sql = "UPDATE ges_factura SET fac_pagado = (fac_pagado - ?), fac_porpagar = ?, fac_estado = 'Abierta' WHERE fac_codigo = ?";
         $query = $pdo->prepare($sql);
         $query->execute(array($datos_pago['pag_valor'],$valor_porpagar,$datos_pago['fac_codigo']));
-  
+
     // 4. DE FINANZAS SE RESTA EL VALOR ELIMINADO
 
         try{
@@ -90,13 +90,33 @@ WHERE ges_factura.ges_sedes_sed_codigo = '".$sede."'";
         die($e->getMessage());
     }
 
-        
+
 
     MIDAS_DataBase::Disconnect();
 
 
   }
-  
+
+  function Create($factura, $pago_destino, $forma_pago, $valrPagar, $fecha){
+	 $pdo = MIDAS_DataBase::Connect();
+	 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+
+	 $sql = "INSERT INTO ges_pagos (pag_codigo,
+                                 ges_facturas_fac_codigo,
+                                 pag_destno,
+                                 ges_formaspago_codigo,
+                                 pag_valor,
+                                 pag_fechapag,
+                                 ges_retenciones_ret_codigo)
+					VALUES ('',?,?,?,?,?,'')";
+
+	 $query = $pdo->prepare($sql);
+	 $query->execute(array($factura, $pago_destino, $forma_pago, $valrPagar, $fecha));
+	 $lastId = $pdo->lastInsertId();
+	 MIDAS_DataBase::Disconnect();
+ }
+
 
 }
 ?>

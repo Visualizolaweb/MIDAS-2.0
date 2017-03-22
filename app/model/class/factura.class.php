@@ -38,8 +38,6 @@ function ReadbyDetalle($codigo_factura){
 
 
 
-
-
 function ReadbyID($codigo_cliente){
 
     $pdo = MIDAS_DataBase::Connect();
@@ -56,6 +54,23 @@ function ReadbyID($codigo_cliente){
 
     return $result;
   }
+
+  function ReadFactByClie($codigo_cliente){
+
+      $pdo = MIDAS_DataBase::Connect();
+      $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+      $sql = "SELECT * FROM ges_factura WHERE ges_clientes_cli_codigo = ? AND fac_porpagar>0 "; # Selecciona los datos del cliente
+
+      $query = $pdo->prepare($sql);
+      $query->execute(array($codigo_cliente));
+
+      $result = $query->fetchAll(PDO::FETCH_BOTH);
+
+      MIDAS_DataBase::Disconnect();
+
+      return $result;
+    }
 
 
   function ReadConf($sede){
@@ -160,6 +175,25 @@ function ReadbyID($codigo_cliente){
     MIDAS_DataBase::Disconnect();
     return $result;
   }
+
+  function ALL_facturasbysede($sede){
+
+    $pdo = MIDAS_DataBase::Connect();
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    $sql = "SELECT * FROM ges_factura WHERE ges_sedes_sed_codigo = ? ORDER BY fac_numero ASC";
+
+    $query = $pdo->prepare($sql);
+    $query->execute(array($sede));
+
+    $result = $query->fetchALL(PDO::FETCH_BOTH);
+
+    MIDAS_DataBase::Disconnect();
+
+    return $result;
+  }
+
+
   function facturabySede_bynum($numero_factura, $sede){
     $pdo = MIDAS_DataBase::Connect();
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -301,7 +335,7 @@ function ReadbyID($codigo_cliente){
 
     }
 
-      function AnularFactura($fac_codigo){
+  function AnularFactura($fac_codigo){
 
     $pdo = MIDAS_DataBase::Connect();
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -314,6 +348,19 @@ function ReadbyID($codigo_cliente){
     MIDAS_DataBase::Disconnect();
   }
 
+  /************ FUNCION QUE ACTUALIZA EL VALOR QUE DEBE UN CLIENTE CUANDO SE REALIZA UN PAGO ***********/
+  function Pagos_Deudas($factura, $vlr_pagado, $vlr_pendiente, $estadofactura){
+
+    $pdo = MIDAS_DataBase::Connect();
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    $sql = "UPDATE ges_factura SET fac_pagado = ?, fac_porpagar = ?, fac_estado=?  WHERE fac_numero = ?";
+
+    $query = $pdo->prepare($sql);
+    $query->execute(array($vlr_pagado, $vlr_pendiente, $estadofactura, $factura));
+
+    MIDAS_DataBase::Disconnect();
+  }
 
 }
 ?>

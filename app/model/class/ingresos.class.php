@@ -10,68 +10,50 @@
     Released under the Free Software License
 -------------------------------------------------- */
 
-# --> Class: Gestion_Sedes
+# --> Class: Gestion_Ingresos
 # --> Method(s): create(), readAll(), readbyID(), delete(), update()
-# --> Author(s): @malvarez
-# --> Date Create: 23 Julio 2015
-# --> Description: La clase controla todas las acciones sobre la tabla ges_sedes
+# --> Author(s): @guille_valen
+# --> Date Create: 4 de Agosto 2015
+# --> Description: La clase controla todas las acciones sobre la tabla ges_ingresos
 
+class Gestion_Ingresos{
 
-class Gestion_Sedes{
 
   /**********************************************
    * Create()                                   *
-   * Metodo que guarda archivos en ges_sedes    *
+   * Metodo que guarda datos en ges_ingresos     *
    **********************************************/
 
-  function Create($sed_codigo, $ges_empresa_emp_codigo, $sed_nombre, $sed_telefono, $sed_email,
-    $sed_direccion, $sed_pais, $sed_departamento, $sed_ciudad, $sed_geoubicacion,
-    $sed_fecha_creacion, $sed_autor, $sed_estudios){
+  function Create($ing_codigo, $ing_comprobante_nro, $ing_beneficiario, $ing_cuenta, $ing_valor, $ing_notas, $ing_fecha_creacion, $ges_sedes_sed_codigo){
 
     $pdo = MIDAS_DataBase::Connect();
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $sql = "INSERT INTO ges_sedes (sed_codigo,ges_empresa_emp_codigo,sed_nombre,sed_telefono,sed_email,sed_direccion,sed_pais,sed_departamento,sed_ciudad,sed_geoubicacion,sed_fecha_creacion,sed_autor,sed_estudios) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    $sql = "INSERT INTO ges_ingresos VALUES (?,?,?,?,?,?,?,?)";
 
     $query = $pdo->prepare($sql);
-    $query->execute(array($sed_codigo, $ges_empresa_emp_codigo, $sed_nombre, $sed_telefono,
-      $sed_email, $sed_direccion, $sed_pais, $sed_departamento, $sed_ciudad, $sed_geoubicacion,
-      $sed_fecha_creacion, $sed_autor, $sed_estudios));
+    $query->execute(array($ing_codigo, $ing_comprobante_nro, $ing_beneficiario, $ing_cuenta, $ing_valor, $ing_notas, $ing_fecha_creacion, $ges_sedes_sed_codigo));
 
-
+    $sql = "UPDATE ges_finanzas SET fin_saldo = (fin_saldo - ?) WHERE fin_codigo = ?";
+    $query = $pdo->prepare($sql);
+    $query->execute(array($ing_valor, $ing_cuenta));
 
     MIDAS_DataBase::Disconnect();
   }
 
   /**********************************************
-   * ReadAll() - ReadbyID() - ReadlastItem()    *
+   * ReadAll() - ReadbyID()                     *
    * Metodos de lectura y consulta, uno es para *
    * todos los registros y otro se consulta por *
    * codigo                                     *
    **********************************************/
-
-     function ReadAllby($franquicia){
-
-       $pdo = MIDAS_DataBase::Connect();
-       $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-       $sql = "SELECT * FROM ges_sedes INNER JOIN ges_ciudades ON ciu_codigo = sed_ciudad WHERE ges_empresa_emp_codigo = ?";
-
-       $query = $pdo->prepare($sql);
-       $query->execute(array($franquicia));
-
-       $results = $query->fetchALL(PDO::FETCH_BOTH);
-
-       MIDAS_DataBase::Disconnect();
-       return $results;
-     }
 
   function ReadAll(){
 
     $pdo = MIDAS_DataBase::Connect();
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $sql = "SELECT * FROM ges_sedes ";
+    $sql = "SELECT * FROM ges_ingresos ORDER BY ing_codigo ASC";
 
     $query = $pdo->prepare($sql);
     $query->execute();
@@ -82,31 +64,19 @@ class Gestion_Sedes{
     return $results;
   }
 
-  function ReadbyEmpresa($emp_codigo){
+    function ReadAllby($sede){
 
     $pdo = MIDAS_DataBase::Connect();
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $sql = "SELECT * FROM ges_sedes WHERE ges_empresa_emp_codigo = ?";
+    $sql = "SELECT * FROM ges_ingresos
+            INNER JOIN ges_finanzas ON ing_cuenta = fin_codigo
+            INNER JOIN ges_banco ON ban_codigo = fin_banco
+
+            WHERE ges_sedes_sed_codigo = ?";
 
     $query = $pdo->prepare($sql);
-    $query->execute(array($emp_codigo));
-
-    $results = $query->fetch(PDO::FETCH_BOTH);
-
-    MIDAS_DataBase::Disconnect();
-    return $results;
-  }
-
-  function ReadAllbyEmpresa($emp_codigo){
-
-    $pdo = MIDAS_DataBase::Connect();
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-    $sql = "SELECT * FROM ges_sedes WHERE ges_empresa_emp_codigo = ?";
-
-    $query = $pdo->prepare($sql);
-    $query->execute(array($emp_codigo));
+    $query->execute(array($sede));
 
     $results = $query->fetchALL(PDO::FETCH_BOTH);
 
@@ -114,15 +84,16 @@ class Gestion_Sedes{
     return $results;
   }
 
-  function ReadbyID($sed_codigo){
+
+  function ReadbyID($ing_codigo){
 
     $pdo = MIDAS_DataBase::Connect();
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $sql = "SELECT * FROM ges_sedes WHERE sed_codigo = ?";
+    $sql = "SELECT * FROM ges_ingresos WHERE ing_codigo = ?  ";
 
     $query = $pdo->prepare($sql);
-    $query->execute(array($sed_codigo));
+    $query->execute(array($ing_codigo));
 
     $result = $query->fetch(PDO::FETCH_BOTH);
 
@@ -136,7 +107,7 @@ class Gestion_Sedes{
     $pdo = MIDAS_DataBase::Connect();
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $sql = "SELECT * FROM ges_sedes ORDER BY sed_fecha_creacion DESC LIMIT 1";
+    $sql = "SELECT * FROM ges_ingresos ORDER BY ing_fecha_creacion DESC LIMIT 1";
 
     $query = $pdo->prepare($sql);
     $query->execute();
@@ -152,15 +123,32 @@ class Gestion_Sedes{
    * Metodo  de Actualización de registro       *
    **********************************************/
 
-  function Update($sed_codigo, $sed_nombre, $sed_telefono, $sed_email, $sed_direccion, $sed_pais, $sed_departamento, $sed_ciudad, $sed_geoubicacion, $sed_estudios){
+  function Update($ing_codigo, $ing_comprobante_nro, $ing_beneficiario, $ing_cuenta, $ing_valor, $ing_notas, $ing_valor_ant, $ing_cuenta_ant){
 
     $pdo = MIDAS_DataBase::Connect();
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $sql = "UPDATE ges_sedes SET sed_nombre = ?, sed_telefono = ?, sed_email = ?, sed_direccion = ?, sed_pais = ?, sed_departamento = ?, sed_ciudad = ?, sed_geoubicacion = ?, sed_estudios = ? WHERE sed_codigo = ?";
+    $sql = "UPDATE ges_ingresos SET ing_comprobante_nro = ?, ing_beneficiario = ?, ing_cuenta = ?, ing_valor = ?, ing_notas = ? WHERE ing_codigo = ?";
 
     $query = $pdo->prepare($sql);
-    $query->execute(array($sed_nombre, $sed_telefono, $sed_email, $sed_direccion, $sed_pais, $sed_departamento, $sed_ciudad, $sed_geoubicacion, $sed_estudios, $sed_codigo));
+    $query->execute(array($ing_comprobante_nro, $ing_beneficiario, $ing_cuenta, $ing_valor, $ing_notas, $ing_codigo));
+
+
+    if(($ing_valor_ant != $ing_valor)or($ing_cuenta_ant != $ing_cuenta)){
+
+
+      $sql = "UPDATE ges_finanzas SET fin_saldo = (fin_saldo + ?) WHERE fin_codigo = ?";
+      $query = $pdo->prepare($sql);
+      $query->execute(array($ing_valor_ant, $ing_cuenta_ant));
+
+      $sql = "UPDATE ges_finanzas SET fin_saldo = (fin_saldo - ?) WHERE fin_codigo = ?";
+      $query = $pdo->prepare($sql);
+      $query->execute(array($ing_valor, $ing_cuenta));
+    }
+
+
+
+
 
     MIDAS_DataBase::Disconnect();
   }
@@ -170,17 +158,31 @@ class Gestion_Sedes{
    * Metodo de eliminación de registro          *
    **********************************************/
 
-  function Delete($sed_codigo){
+  function Delete($ing_codigo){
 
     $pdo = MIDAS_DataBase::Connect();
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $sql = "DELETE FROM ges_sedes WHERE sed_codigo = ?";
+     $sql = "SELECT * FROM ges_ingresos WHERE ing_codigo = ?";
 
     $query = $pdo->prepare($sql);
-    $query->execute(array($sed_codigo));
+    $query->execute(array($ing_codigo));
+
+    $result = $query->fetch(PDO::FETCH_BOTH);
+
+
+    $sql = "DELETE FROM ges_ingresos WHERE ing_codigo = ?";
+
+    $query = $pdo->prepare($sql);
+    $query->execute(array($ing_codigo));
+
+    $sql = "UPDATE ges_finanzas SET fin_saldo = (fin_saldo + ?) WHERE fin_codigo = ?";
+      $query = $pdo->prepare($sql);
+      $query->execute(array($result["ing_valor"], $result["ing_cuenta"]));
 
     MIDAS_DataBase::Disconnect();
+
+
   }
 
 }

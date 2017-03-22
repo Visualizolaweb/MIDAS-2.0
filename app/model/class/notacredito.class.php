@@ -1,8 +1,8 @@
 <?php
 
-class Gestion_NotaDebito{
+class Gestion_NotaCredito{
 
-	  function notasdebitoby($sede){
+	  function notascreditby($sede){
     $pdo = MIDAS_DataBase::Connect();
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
@@ -23,7 +23,7 @@ class Gestion_NotaDebito{
 		$pdo = MIDAS_DataBase::Connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-		$sql = "SELECT MAX(nota_numero) FROM ges_notadebito WHERE ges_sedes_sed_codigo = ?";
+		$sql = "SELECT MAX(notacre_numero) FROM ges_notacredito WHERE ges_sedes_sed_codigo = ?";
 
 		$query = $pdo->prepare($sql);
 		$query->execute(array($sede));
@@ -50,16 +50,16 @@ class Gestion_NotaDebito{
 	}
 
 
-	function Notas_DebitoBySede($sede){
+	function Notas_CreditoBySede($sede){
 
 		$pdo = MIDAS_DataBase::Connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-		$sql = "SELECT nota_codigo, nota_numero, nota_fecha, nota_total, ges_finanzas_fin_codigo, cli_nombre, cli_apellido
-						FROM ges_notadebito
+		$sql = "SELECT notacre_codigo, notacre_numero, notacre_fecha, notacre_total, ges_finanzas_fin_codigo, cli_nombre, cli_apellido
+						FROM ges_notacredito
 						JOIN ges_clientes
-						ON nota__clientes_cli_codigo = cli_codigo
-						WHERE ges_notadebito.ges_sedes_sed_codigo = ? ORDER BY nota_fecha DESC";
+						ON nota__clientescre_cli_codigo = cli_codigo
+						WHERE ges_notacredito.ges_sedes_sed_codigo = ? ORDER BY notacre_fecha DESC";
 
 		$query = $pdo->prepare($sql);
 		$query->execute(array($sede));
@@ -70,16 +70,16 @@ class Gestion_NotaDebito{
 	}
 
 
-	function Notas_Debito_Detalle($numero_nota){
+	function Notas_Credito_Detalle($numero_nota){
 
 		$pdo = MIDAS_DataBase::Connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-		$sql = "SELECT nota_codigo, nota_numero, nota_fecha, nota_total, ges_finanzas_fin_codigo, cli_nombre, cli_apellido, ges_facturas_fac_numero
-						FROM ges_notadebito
+		$sql = "SELECT notacre_codigo, notacre_numero, notacre_fecha, notacre_total, ges_finanzas_fin_codigo, cli_nombre, cli_apellido, ges_facturas_fac_numero
+						FROM ges_notacredito
 						JOIN ges_clientes
-						ON nota__clientes_cli_codigo = cli_codigo
-						WHERE nota_numero = $numero_nota ORDER BY nota_fecha DESC";
+						ON nota__clientescre_cli_codigo = cli_codigo
+						WHERE notacre_numero = $numero_nota ORDER BY notacre_fecha DESC";
 
 		$query = $pdo->prepare($sql);
 		$query->execute(array($numero_nota));
@@ -90,32 +90,32 @@ class Gestion_NotaDebito{
 		return $results;
 	}
 
-	function Notas_Debito_Detalle_prod($numero_nota){
+	function Notas_Credito_Detalle_prod($numero_nota){
 
 		$pdo = MIDAS_DataBase::Connect();
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 		$sql = "SELECT
-											ges_notadebito_nota_codigo,det_cantidad, det_observaciones, prod_nombre, prod_valor
+											ges_notacredito_nota_codigo, detcre_cantidad, detcre_observaciones, prod_nombre, prod_valor
 								FROM
-											ges_detallenotadebito
+											ges_detallenotacredito
 								JOIN
 											ges_productos
 								ON
 											prod_codigo = ges_producto_pro_codigo
 								WHERE
-											ges_notadebito_nota_codigo = $numero_nota
+											ges_notacredito_nota_codigo = $numero_nota
 								UNION
 								SELECT
-											ges_notadebito_nota_codigo,det_cantidad, det_observaciones, pla_nombre, pla_valor
+											ges_notacredito_nota_codigo, detcre_cantidad, detcre_observaciones, pla_nombre, pla_valor
 								FROM
-											ges_detallenotadebito
+											ges_detallenotacredito
 								JOIN
 											ges_planes
 								ON
 											pla_codigo = ges_producto_pro_codigo
 								WHERE
-											ges_notadebito_nota_codigo = $numero_nota";
+											ges_notacredito_nota_codigo = $numero_nota";
 
 		$query = $pdo->prepare($sql);
 		$query->execute(array($numero_nota));
@@ -131,11 +131,11 @@ class Gestion_NotaDebito{
 	 $pdo = MIDAS_DataBase::Connect();
 	 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-	 $sql = "INSERT INTO ges_notadebito (nota_codigo,
-				             nota_numero,
-				             nota__clientes_cli_codigo,
-				             nota_fecha,
-				             nota_total,
+	 $sql = "INSERT INTO ges_notacredito (notacre_codigo,
+				             notacre_numero,
+				             nota__clientescre_cli_codigo,
+				             notacre_fecha,
+				             notacre_total,
 										 ges_sedes_sed_codigo,
 									 	 ges_facturas_fac_numero,
 									 	 ges_finanzas_fin_codigo)
@@ -153,7 +153,7 @@ class Gestion_NotaDebito{
 	 $pdo = MIDAS_DataBase::Connect();
 	 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-	 $sql = "INSERT INTO ges_detallenotadebito (det_codigo, ges_notadebito_nota_codigo, ges_producto_pro_codigo, det_cantidad, det_observaciones)
+	 $sql = "INSERT INTO ges_detallenotacredito (detcre_codigo, ges_notacredito_nota_codigo, ges_producto_pro_codigo, detcre_cantidad, detcre_observaciones)
 					VALUES ('',?,?,?,?)";
 
 	 $query = $pdo->prepare($sql);
@@ -161,22 +161,22 @@ class Gestion_NotaDebito{
 	 MIDAS_DataBase::Disconnect();
  }
 
-	/*FUNCION QUE ACTUALIA EL SALDO DE LA NOTA DÉBITO*/
+ /*FUNCION QUE ACTUALIA EL SALDO DE LA NOTA DÉBITO*/
  function Update_Saldo_Banco($cuenta_banco,$tot_saldo){
-	 $pdo = MIDAS_DataBase::Connect();
-	 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	$pdo = MIDAS_DataBase::Connect();
+	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-	 $sql = "UPDATE
-	 							ges_finanzas
-	 				SET
-								fin_saldo = ?
-					 WHERE
-					 			fin_codigo = ?";
+	echo $sql = "UPDATE
+							 ges_finanzas
+				 SET
+							 fin_saldo = ?
+					WHERE
+							 fin_codigo = ?";
 
-	 $query = $pdo->prepare($sql);
-	 $query->execute(array($tot_saldo, $cuenta_banco));
+	$query = $pdo->prepare($sql);
+	$query->execute(array($tot_saldo, $cuenta_banco));
 
-	 MIDAS_DataBase::Disconnect();
+	MIDAS_DataBase::Disconnect();
  }
 
 }
